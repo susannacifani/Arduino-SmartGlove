@@ -1,5 +1,5 @@
 # Ignora cartelle
-_pycache_
+__pycache__
 slidesgesture
 tests
 
