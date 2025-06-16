@@ -104,11 +104,11 @@ def calibration_swipe(stream, calibration_data):
             num_swipes = num_swipes + 1
             remaining = 5 - num_swipes
             if remaining != 0:
-                eel.updateCalibrationStatus(f"{remaining} swipe rimanenti.")()
+                eel.updateCalibrationStatus(f"{remaining} remaining swipes.")()
                 eel.sleep(0.1)
 
         elif invalid_swipe:
-            eel.updateCalibrationStatus("Swipe non valido, ripeti.")()
+            eel.updateCalibrationStatus("Invalid swipe, please repeat.")()
             eel.sleep(0.1)
             invalid_swipe = False
 
@@ -120,7 +120,7 @@ def calibration_swipe(stream, calibration_data):
 def run_calibration(sock, profile_name):
     global num_swipes, last_pressed, start_calibration_window, calibration_dx, calibration_sx, calibrated_dx, calibrated_sx
     num_swipes = 0
-    eel.updateCalibrationStatus("Fai 5 swipe da destra a sinistra.")()
+    eel.updateCalibrationStatus("Execute 5 right-to-left swipes.")()
     eel.sleep(0.1)
     while True:
         if num_swipes == 5:
@@ -128,13 +128,13 @@ def run_calibration(sock, profile_name):
                 calibrated_dx = True
                 num_swipes = 0
                 # print(f"Valori di calibrazione swipe a dx: '{calibration_dx}'")
-                eel.updateCalibrationStatus("Fai 5 swipe da sinistra a destra.")()
+                eel.updateCalibrationStatus("Execute 5 left-to-right swipes.")()
                 eel.sleep(0.1)
             elif calibrated_dx and not calibrated_sx:
                 calibrated_sx = True
                 # print(f"Valori di calibrazione swipe a sx: '{calibration_sx}'")
                 save_profiles(profile_name)
-                eel.updateCalibrationStatus(f"Calibrazione completata per il profilo '{profile_name}'!")()
+                eel.updateCalibrationStatus(f"Calibration complete for profile '{profile_name}'!")()
                 eel.sleep(0.1)
                 break
 

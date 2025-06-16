@@ -12,6 +12,9 @@ TIME_INTERVAL = 0.3
 FLEX_TIME_INTERVAL = 1
 GYRO_Y_MIN_THRESHOLD = -15000
 GYRO_Y_MAX_THRESHOLD = 15000
+screenWidth, screenHeight = pyautogui.size()
+centerX = screenWidth / 2
+centerY = screenHeight / 2
 
 # Variabili globali
 sock = None 
@@ -248,7 +251,13 @@ def update():
                 # Check play/pause video (BARRA SPAZIATRICE)
                 elif (flex) > 900 and (current_time - last_pressed > FLEX_TIME_INTERVAL):
                     current_time = last_pressed = time.time()
-                    pyautogui.press('space')
+                    # pyautogui.press('space') # Implementazione play/pause con barra spaziatrice, ma non funziona per video nelle presentazioni
+                    current_x, current_y = pyautogui.position()
+                    if (current_x == centerX) and (current_y == centerY):
+                        pyautogui.moveTo(centerX+5, centerY+5, duration=0.2)
+                    else:
+                        pyautogui.moveTo(centerX, centerY, duration=0.2)
+                    pyautogui.click()
                     send_vibration_command('P')
                 # Check sliding up/down (scroll)
                 elif (-4000 < accel_y < 4000) and (8000 < accel_z < 17000) and (flex) < 800 and (current_time - last_pressed > 0.1):

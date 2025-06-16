@@ -161,61 +161,7 @@
             "gyro_z_max_mean": -352
         }
     },
-    "test555": {
-        "dx": {
-            "accel_x_min": -10000,
-            "accel_x_max": 17484,
-            "accel_x_min_mean": 2520,
-            "accel_x_max_mean": 6663,
-            "accel_y_min": -24632,
-            "accel_y_max": 3268,
-            "accel_y_min_mean": -17000,
-            "accel_y_max_mean": -12000,
-            "accel_z_min": -12444,
-            "accel_z_max": 32767,
-            "accel_z_min_mean": 11748,
-            "accel_z_max_mean": 13409,
-            "gyro_x_min": -22000,
-            "gyro_x_max": 18000,
-            "gyro_x_min_mean": null,
-            "gyro_x_max_mean": null,
-            "gyro_y_min": null,
-            "gyro_y_max": null,
-            "gyro_y_min_mean": -17000,
-            "gyro_y_max_mean": -9000,
-            "gyro_z_min": -10000,
-            "gyro_z_max": 15230,
-            "gyro_z_min_mean": 4505,
-            "gyro_z_max_mean": 7370
-        },
-        "sx": {
-            "accel_x_min": -10000,
-            "accel_x_max": 10000,
-            "accel_x_min_mean": -3146,
-            "accel_x_max_mean": 1946,
-            "accel_y_min": -28732,
-            "accel_y_max": -4336,
-            "accel_y_min_mean": -20023,
-            "accel_y_max_mean": -12000,
-            "accel_z_min": -21180,
-            "accel_z_max": 23596,
-            "accel_z_min_mean": -5187,
-            "accel_z_max_mean": 3144,
-            "gyro_x_min": -22000,
-            "gyro_x_max": 18000,
-            "gyro_x_min_mean": null,
-            "gyro_x_max_mean": null,
-            "gyro_y_min": null,
-            "gyro_y_max": null,
-            "gyro_y_min_mean": 15000,
-            "gyro_y_max_mean": 7000,
-            "gyro_z_min": -20927,
-            "gyro_z_max": 10000,
-            "gyro_z_min_mean": -9552,
-            "gyro_z_max_mean": -1728
-        }
-    },
-    "esace": {
+    "ngftngd": {
         "dx": {
             "accel_x_min": -10000,
             "accel_x_max": 10000,
