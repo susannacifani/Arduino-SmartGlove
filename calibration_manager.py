@@ -116,6 +116,8 @@ def calibration_swipe(stream, calibration_data):
         start_calibration_window = False
         calibration_window = []
 
+    return calibration_data
+
 # --- Funzione per la fase di calibrazione ---
 def run_calibration(sock, profile_name):
     global num_swipes, last_pressed, start_calibration_window, calibration_dx, calibration_sx, calibrated_dx, calibrated_sx
@@ -133,7 +135,7 @@ def run_calibration(sock, profile_name):
             elif calibrated_dx and not calibrated_sx:
                 calibrated_sx = True
                 # print(f"Valori di calibrazione swipe a sx: '{calibration_sx}'")
-                save_profiles(profile_name)
+                # save_profiles(profile_name)
                 eel.updateCalibrationStatus(f"Calibration complete for profile '{profile_name}'!")()
                 eel.sleep(0.1)
                 break
@@ -158,13 +160,16 @@ def run_calibration(sock, profile_name):
                     if not start_calibration_window:
                         start_calibration_window = True
                 if start_calibration_window:
-                    calibration_swipe(stream, calibration_dx)
+                    new_calibration_data = calibration_swipe(stream, calibration_dx)
+                    calibration_dx = new_calibration_data
             if calibrated_dx and not calibrated_sx:
                 if (gyro_y > GYRO_Y_MAX_THRESHOLD) and (current_time - last_pressed > TIME_INTERVAL):
                     if not start_calibration_window:
                         start_calibration_window = True
                 if start_calibration_window:
-                    calibration_swipe(stream, calibration_sx)
+                    new_calibration_data = calibration_swipe(stream, calibration_sx)
+                    calibration_sx = new_calibration_data
+    # print(calibration_dx, calibration_sx)
 
     return calibration_dx, calibration_sx
                 

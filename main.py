@@ -4,7 +4,7 @@ import eel
 import socket
 
 from calibration_manager import run_calibration
-from json_manager import load_profiles
+from json_manager import load_profiles, save_profiles
 
 # Costanti
 WINDOW_SIZE = 9
@@ -46,7 +46,7 @@ scroll_up = False
 
 def send_vibration_command(command_char):
     global sock
-    ARDUINO_IP = "172.20.10.3"  
+    ARDUINO_IP = "172.20.10.4"  
     ARDUINO_PORT = 8889  # port for sending commands to Arduino
     try:
         if sock:
@@ -84,8 +84,10 @@ def swipe(stream, calibration_data):
 
             # ACCEL_Y: se l'accelerazione della mano verso alto/basso è eccessiva, gesto invalido
             # procedo facendo la somma di ogni valore per poi calcolarne la media e fare dopo i check (così non è sensibile agli outliers)
-            sum_accy += int(row[1])
-
+            try: 
+                sum_accy += int(row[1])
+            except Exception as e:
+                print(f"Errore nella somma accel_Y: {e}")
             # ACCEL_Z
             if (int(row[2]) < 0):
                 neg_accelz = True
@@ -99,10 +101,16 @@ def swipe(stream, calibration_data):
             # procedo facendo la somma dei valori e poi dei check sulla media, limito gyro_y 
             if calibration_data == calibration_dx:
                 if int(row[4]) < 0:
-                    sum_gyroy += int(row[4])
+                    try: 
+                        sum_gyroy += int(row[4])
+                    except Exception as e:
+                        print(f"Errore nella somma gyro_Y 1: {e}")
             elif calibration_data == calibration_sx:
                 if int(row[4]) > 0:
-                    sum_gyroy += int(row[4])
+                    try: 
+                        sum_gyroy += int(row[4])
+                    except Exception as e:
+                        print(f"Errore nella somma gyro_Y 2: {e}")
 
             # GYRO_Z: rotazione verso l'alto/basso
             if (int(row[5]) < calibration_data['gyro_z_min']  or int(row[5]) > calibration_data['gyro_z_max']) and (invalid_gesture == False): # se una riga sfora, il gesto diventa invalido
@@ -122,8 +130,11 @@ def swipe(stream, calibration_data):
 
         # CHECK ACCEL_Y
         mean_accy = sum_accy / WINDOW_SIZE
-        min_mean = (calibration_data['accel_y_min'] + calibration_data['accel_y_min_mean']) / 2
-        max_mean = (calibration_data['accel_y_max'] + (calibration_data['accel_y_max_mean'] * 1.6)) / 2
+        try: 
+            min_mean = (calibration_data['accel_y_min'] + calibration_data['accel_y_min_mean']) / 2
+            max_mean = (calibration_data['accel_y_max'] + (calibration_data['accel_y_max_mean'] * 1.6)) / 2
+        except Exception as e:
+            print(f"Errore calcolo medie accel Y: {e}")
         if (mean_accy < min_mean or mean_accy > max_mean): # di solito oscilla intorno ai -15.000. [-17.000, -12.000]
             invalid_gesture = True
             print("INVALID ACCEL Y")
@@ -193,7 +204,10 @@ def start(choice, profile_name):
 
 
     if choice == 1:
-        calibration_dx, calibration_sx = run_calibration(sock, profile_name)
+        new_calibration_data_dx, new_calibration_data_sx = run_calibration(sock, profile_name)
+        calibration_dx = new_calibration_data_dx
+        calibration_sx = new_calibration_data_sx
+        save_profiles(profile_name, calibration_dx, calibration_sx)
     elif choice == 2:
         profiles = load_profiles()
         calibration_dx = profiles[profile_name]['dx']

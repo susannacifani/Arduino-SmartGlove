@@ -35,12 +35,12 @@ def load_profiles(filename="profiles.json"):
         return {}
 
 
-def save_profiles(profile_name, filename="profiles.json"):
+def save_profiles(profile_name, calibration_data_dx, calibration_data_sx, filename="profiles.json"):
     """Salva i profili di calibrazione in un file."""
     if profile_name == "":
         profile_name = f"calibrazione_{uuid.uuid4().hex[:8]}" # Genera un nome casuale
     data = load_profiles()
-    calibration_data = {'dx': calibration_dx, 'sx': calibration_sx}
+    calibration_data = {'dx': calibration_data_dx, 'sx': calibration_data_sx}
 
     data[profile_name] = calibration_data
 
