@@ -47,7 +47,7 @@ def save_profiles(profile_name, calibration_data_dx, calibration_data_sx, filena
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
         print(f"Profilo salvato con nome: {profile_name}")
-        print(f"Con valori di calibrazione swipe a dx: '{calibration_dx}'\n E valori di calibrazione swipe a sx: '{calibration_sx}'")
+        print(f"Con valori di calibrazione swipe a dx: '{calibration_data_dx}'\n E valori di calibrazione swipe a sx: '{calibration_data_sx}'")
 
 
 def delete_profiles(profile_name, filename="profiles.json"):
